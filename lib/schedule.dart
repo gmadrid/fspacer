@@ -25,7 +25,7 @@ class Schedule {
     while (_buckets.first.isEmpty) {
       _buckets.removeAt(0);
       _buckets.first.sort();
-      _buckets = _buckets.reversed.toList();
+      _buckets[0] = _buckets.first.reversed.toList();
     }
   }
 }

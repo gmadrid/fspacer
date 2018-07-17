@@ -52,11 +52,15 @@ import 'package:test/test.dart';
         expect(s.Current(), equals(1));
         s.PopCurrent();
 
-        // 3 2 1//4
+        // 1/3 2//4
+        expect(s.Current(), equals(1));
+        s.PopCurrent();
+
+        // 3 2 1 //4
         expect(s.Current(), equals(3));
         s.PopCurrent();
 
-        // 2 1 //4/3
+        // 2 1//4/3
         expect(s.Current(), equals(2));
         s.PopCurrent();
 
