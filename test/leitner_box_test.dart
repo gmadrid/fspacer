@@ -1,7 +1,6 @@
+import 'package:fspacer/leitner/leitner_box.dart';
+import 'package:fspacer/leitner/question.dart';
 import 'package:test/test.dart';
-
-import 'package:fspacer/leitner_box.dart';
-import 'package:fspacer/question.dart';
 
 String Q(num index) {
   return "Question $index";

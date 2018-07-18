@@ -1,4 +1,4 @@
-import 'question.dart';
+import 'package:fspacer/leitner/question.dart';
 
 class LeitnerBox {
   LeitnerBox() {

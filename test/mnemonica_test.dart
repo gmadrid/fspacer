@@ -1,6 +1,5 @@
+import 'package:fspacer/leitner/mnemonica.dart';
 import 'package:test/test.dart';
-
-import 'package:fspacer/mnemonica.dart';
 
 void main() {
   test('All cards present', () {

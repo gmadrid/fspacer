@@ -1,6 +1,5 @@
+import 'package:fspacer/leitner/question.dart';
 import 'package:test/test.dart';
-
-import 'package:fspacer/question.dart';
 
 main() {
   test("Default question", () {
@@ -16,7 +15,7 @@ main() {
 
     expect(q1.hashCode, equals(q2.hashCode));
   });
-  
+
   test("case-insensitive match", () {
     var q = Question("QQ", "AnSwEr");
     expect(q.match("answer"), isTrue);
