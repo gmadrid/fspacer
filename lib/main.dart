@@ -51,12 +51,12 @@ class GameState extends State<GameWidget> {
 }
 
 class DisplayWidget extends StatelessWidget {
-  DisplayWidget(this._current_card);
+  DisplayWidget(this.currentCard);
 
   @override
   Widget build(BuildContext context) {
-    var pips = _current_card[0];
-    var suit = _current_card[1];
+    var pips = currentCard[0];
+    var suit = currentCard[1];
     var suitColor =
         suit == 'H' || suit == 'D' ? Color(0xffff0000) : Color(0xff000000);
     var suitSymbol;
@@ -86,7 +86,7 @@ class DisplayWidget extends StatelessWidget {
     ));
   }
 
-  String _current_card;
+  final String currentCard;
 }
 
 class StatusWidget extends StatelessWidget {
@@ -97,11 +97,11 @@ class StatusWidget extends StatelessWidget {
     return Text(_status);
   }
 
-  String _status;
+  final String _status;
 }
 
 class InputWidget extends StatelessWidget {
-  InputWidget(VoidCallback this._onPressed);
+  InputWidget(this._onPressed);
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +113,7 @@ class InputWidget extends StatelessWidget {
     ));
   }
 
-  VoidCallback _onPressed;
+  final VoidCallback _onPressed;
 }
 
 //import 'package:flutter/material.dart';

@@ -4,5 +4,6 @@ import 'package:test/test.dart';
 void main() {
   test("game creation", () {
     Game game = Game(15);
+    expect(game, isNotNull);
   });
 }

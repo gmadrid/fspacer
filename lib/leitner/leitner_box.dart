@@ -8,41 +8,41 @@ class LeitnerBox {
     }
   }
 
-  void AddQuestions(Iterable<Question> questions) {
+  void addQuestions(Iterable<Question> questions) {
     _buckets[waiting_bucket].addAll(questions);
-    _num_questions += questions.length;
-    Shuffle(waiting_bucket);
+    _numQuestions += questions.length;
+    shuffle(waiting_bucket);
   }
-  num Size() {return _num_questions;}
-  num BucketSize(num index) { return _buckets[index].length; }
+  num size() {return _numQuestions;}
+  num bucketSize(num index) { return _buckets[index].length; }
 
-  Question Next(num index) {
+  Question next(num index) {
     if (_buckets[index].length == 0) return null;
     return _buckets[index].last;
   }
 
-  void Shuffle(num index) {
+  void shuffle(num index) {
     _buckets[index].shuffle();
   }
 
-  void MoveToFirst(num index) {
-    if (BucketSize(index) < 1) return;
+  void moveToFirst(num index) {
+    if (bucketSize(index) < 1) return;
 
-    var from_bucket = _buckets[index];
-    var q = from_bucket.last;
-    from_bucket.removeLast();
+    var fromBucket = _buckets[index];
+    var q = fromBucket.last;
+    fromBucket.removeLast();
     _buckets[first_bucket].insert(0, q);
   }
 
-  void MoveUp(num index) {
-    if (BucketSize(index) < 1) return;
+  void moveUp(num index) {
+    if (bucketSize(index) < 1) return;
 
     // TODO: have a way to deal with this case.
     if (index == last_bucket) return;
 
-    var from_bucket = _buckets[index];
-    var q = from_bucket.last;
-    from_bucket.removeLast();
+    var fromBucket = _buckets[index];
+    var q = fromBucket.last;
+    fromBucket.removeLast();
     _buckets[index + 1].insert(0, q);
   }
 
@@ -53,5 +53,5 @@ class LeitnerBox {
   static const num _total_buckets = last_bucket + 1;
 
   List<List<Question>> _buckets;
-  num _num_questions = 0;
+  num _numQuestions = 0;
 }

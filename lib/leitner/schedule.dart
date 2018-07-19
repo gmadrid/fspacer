@@ -1,19 +1,19 @@
 class Schedule {
   List<List<num>> _buckets;
 
-  Schedule(num num_buckets) {
-    _buckets = new List()..length = num_buckets;
-    for (var i = 0; i < num_buckets; ++i) {
+  Schedule(num numBuckets) {
+    _buckets = new List()..length = numBuckets;
+    for (var i = 0; i < numBuckets; ++i) {
       _buckets[i] = new List()..add(i + 1);
     }
   }
 
-  num Current() {
+  num current() {
     return _buckets.first.first;
   }
 
-  void PopCurrent() {
-    var val = Current();
+  void popCurrent() {
+    var val = current();
 
     while (_buckets.length < val + 1) {
       _buckets.add(new List());

@@ -16,40 +16,40 @@ class Game {
       qs.add(Question((i + 1).toString(), mnemonicaQuestions[i]));
     }
 
-    _lb.AddQuestions(qs);
-    _lb.Shuffle(LeitnerBox.waiting_bucket);
+    _lb.addQuestions(qs);
+    _lb.shuffle(LeitnerBox.waiting_bucket);
   }
 
   String get status {
-    return "Level: ${_schedule.Current()}";
+    return "Level: ${_schedule.current()}";
   }
 
   String get currentCard {
-    var bucketIndex = _schedule.Current();
-    while (_lb.BucketSize(bucketIndex) == 0) {
+    var bucketIndex = _schedule.current();
+    while (_lb.bucketSize(bucketIndex) == 0) {
       // TODO: this will infinite loop if the box is empty.
-        _schedule.PopCurrent();
-        bucketIndex = _schedule.Current();
+        _schedule.popCurrent();
+        bucketIndex = _schedule.current();
 
         if (bucketIndex == LeitnerBox.first_bucket &&
-            _lb.BucketSize(LeitnerBox.first_bucket) == 0) {
+            _lb.bucketSize(LeitnerBox.first_bucket) == 0) {
           _addQuestionsToFirstBucket();
         }
     }
 
-    var card = _lb.Next(bucketIndex);
+    var card = _lb.next(bucketIndex);
     return card.a;
   }
 
   void _addQuestionsToFirstBucket() {
     // TODO: deal with case when the "waiting" box is empty.
     for (var i = 0; i < _DEFAULT_NUM_QUESTIONS; ++i) {
-      _lb.MoveToFirst(LeitnerBox.waiting_bucket);
+      _lb.moveToFirst(LeitnerBox.waiting_bucket);
     }
   }
 
   bool tryInput(String input) {
-    _lb.MoveUp(_schedule.Current());
+    _lb.moveUp(_schedule.current());
     return false;
   }
 
