@@ -1,22 +1,119 @@
 import 'package:flutter/material.dart';
 
+import 'leitner/game.dart';
+
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: "An app",
-      home: MyHomePage(),
-    );
+        title: "Mnemonica Tutor",
+        theme: ThemeData(
+          primaryColor: Colors.purple,
+        ),
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text("Mnemonica Tutor"),
+          ),
+          body: MyHomePage(),
+        ));
   }
 }
 
 class MyHomePage extends StatelessWidget {
   @override
+  Widget build(BuildContext context) => GameWidget();
+}
+
+class GameWidget extends StatefulWidget {
+  @override
+  State createState() => GameState();
+}
+
+class GameState extends State<GameWidget> {
+  @override
   Widget build(BuildContext context) {
-    return new Container();
+    VoidCallback kkk = () {
+      setState(() {
+        _game.tryInput("foo");
+      });
+    };
+    return Column(
+      children: <Widget>[
+        DisplayWidget(_game.currentCard),
+        StatusWidget(_game.status),
+        InputWidget(kkk)],
+    );
   }
+
+  Game _game = Game(10);
+}
+
+class DisplayWidget extends StatelessWidget {
+  DisplayWidget(this._current_card);
+
+  @override
+  Widget build(BuildContext context) {
+    var pips = _current_card[0];
+    var suit = _current_card[1];
+    var suitColor =
+        suit == 'H' || suit == 'D' ? Color(0xffff0000) : Color(0xff000000);
+    var suitSymbol;
+    switch (suit) {
+      case 'H':
+        suitSymbol = "\u2665";
+        break;
+      case 'S':
+        suitSymbol = "\u2660";
+        break;
+      case 'D':
+        suitSymbol = "\u2666";
+        break;
+      case 'C':
+        suitSymbol = "\u2663";
+        break;
+    }
+
+    return Expanded(
+        child: DefaultTextStyle(
+      style: TextStyle(fontSize: 96.0, color: Color(0xff000000)),
+      child:
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+        Text(pips),
+        Text(suitSymbol, style: TextStyle(color: suitColor)),
+      ]),
+    ));
+  }
+
+  String _current_card;
+}
+
+class StatusWidget extends StatelessWidget {
+  StatusWidget(this._status);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(_status);
+  }
+
+  String _status;
+}
+
+class InputWidget extends StatelessWidget {
+  InputWidget(VoidCallback this._onPressed);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(child: Center(
+        child: FlatButton(
+          child: Text("Button"),
+            onPressed: _onPressed
+        )
+    ));
+  }
+
+  VoidCallback _onPressed;
 }
 
 //import 'package:flutter/material.dart';

@@ -2,7 +2,7 @@ class Question {
   String _q;
   String _a;
 
-  Question(this._q, this._a) {}
+  Question(this._q, this._a);
 
   String get q => _q;
   String get a => _a;

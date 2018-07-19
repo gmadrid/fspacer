@@ -9,17 +9,21 @@ class LeitnerBox {
   }
 
   void AddQuestions(Iterable<Question> questions) {
-    _buckets[0].addAll(questions);
+    _buckets[waiting_bucket].addAll(questions);
     _num_questions += questions.length;
+    Shuffle(waiting_bucket);
   }
   num Size() {return _num_questions;}
   num BucketSize(num index) { return _buckets[index].length; }
 
   Question Next(num index) {
+    if (_buckets[index].length == 0) return null;
     return _buckets[index].last;
   }
 
-  void Shuffle(num index) { return; }
+  void Shuffle(num index) {
+    _buckets[index].shuffle();
+  }
 
   void MoveToFirst(num index) {
     if (BucketSize(index) < 1) return;

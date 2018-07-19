@@ -15,9 +15,9 @@ class Schedule {
   void PopCurrent() {
     var val = Current();
 
-      while(_buckets.length < val + 1) {
-        _buckets.add(new List());
-      }
+    while (_buckets.length < val + 1) {
+      _buckets.add(new List());
+    }
     _buckets[val].add(val);
 
     _buckets.first.removeAt(0);
