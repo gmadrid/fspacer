@@ -1,120 +1,27 @@
 import 'package:flutter/material.dart';
 
-import 'leitner/game.dart';
+import 'quizscreen/quiz_screen.dart';
 
-void main() => runApp(new MyApp());
+// TODO
+// - persistence
+// - style status bar
+// - write a Card keyboard
+// - handle input
+// - add timer
+// - update status bar with messages for:
+//   - changing buckets
+//   - number of questions left in box
+// - toast when adding new questions to bucket 1.
+// - deal with game end when no more questions anywhere!
+// - pull custom widgets to own files
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-        title: "Mnemonica Tutor",
-        theme: ThemeData(
-          primaryColor: Colors.purple,
-        ),
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text("Mnemonica Tutor"),
-          ),
-          body: MyHomePage(),
-        ));
-  }
-}
+void main() => runApp(new QuizScreen());
 
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) => GameWidget();
-}
-
-class GameWidget extends StatefulWidget {
-  @override
-  State createState() => GameState();
-}
-
-class GameState extends State<GameWidget> {
-  @override
-  Widget build(BuildContext context) {
-    VoidCallback kkk = () {
-      setState(() {
-        _game.tryInput("foo");
-      });
-    };
-    return Column(
-      children: <Widget>[
-        DisplayWidget(_game.currentCard),
-        StatusWidget(_game.status),
-        InputWidget(kkk)],
-    );
-  }
-
-  Game _game = Game(10);
-}
-
-class DisplayWidget extends StatelessWidget {
-  DisplayWidget(this.currentCard);
-
-  @override
-  Widget build(BuildContext context) {
-    var pips = currentCard[0];
-    var suit = currentCard[1];
-    var suitColor =
-        suit == 'H' || suit == 'D' ? Color(0xffff0000) : Color(0xff000000);
-    var suitSymbol;
-    switch (suit) {
-      case 'H':
-        suitSymbol = "\u2665";
-        break;
-      case 'S':
-        suitSymbol = "\u2660";
-        break;
-      case 'D':
-        suitSymbol = "\u2666";
-        break;
-      case 'C':
-        suitSymbol = "\u2663";
-        break;
-    }
-
-    return Expanded(
-        child: DefaultTextStyle(
-      style: TextStyle(fontSize: 96.0, color: Color(0xff000000)),
-      child:
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-        Text(pips),
-        Text(suitSymbol, style: TextStyle(color: suitColor)),
-      ]),
-    ));
-  }
-
-  final String currentCard;
-}
-
-class StatusWidget extends StatelessWidget {
-  StatusWidget(this._status);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(_status);
-  }
-
-  final String _status;
-}
-
-class InputWidget extends StatelessWidget {
-  InputWidget(this._onPressed);
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(child: Center(
-        child: FlatButton(
-          child: Text("Button"),
-            onPressed: _onPressed
-        )
-    ));
-  }
-
-  final VoidCallback _onPressed;
-}
+//class MyHomePage extends StatelessWidget {
+//  @override
+//  Widget build(BuildContext context) => GameWidget();
+//}
+//
 
 //import 'package:flutter/material.dart';
 //
