@@ -18,9 +18,7 @@ class StatusWidget extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   _game.status,
-                  style: themeData
-                      .textTheme
-                      .display1
+                  style: themeData.textTheme.display1
                       .copyWith(color: Colors.black),
                 )))
       ],
