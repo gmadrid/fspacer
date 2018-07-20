@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 
+import 'package:fspacer/colors.dart';
+
 class InputWidget extends StatelessWidget {
   InputWidget(this._onPressed);
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(child: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          FlatButton(
-              child: Text("Get it right"),
-              onPressed: _onPressed
-          ),
-          FlatButton(
-              child: Text("Get it wrong"),
-              onPressed: _onPressed
-          )
-        ],
-      ),
+    return Expanded(
+            child: ButtonBar(
+              alignment: MainAxisAlignment.center,
+      children: <Widget>[
+        OutlineButton(
+          child: Text("WRONG"),
+          onPressed: () {},
+        ),
+        RaisedButton(
+          child: Text("RIGHT", style: Theme.of(context).textTheme.button.copyWith(
+            color: onPrimaryColor,
+          ),),
+          onPressed: () {},
+        ),
+      ],
     ));
   }
 
