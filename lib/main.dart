@@ -13,6 +13,5 @@ import 'quizscreen/quiz_screen.dart';
 //   - number of questions left in box
 // - toast when adding new questions to bucket 1.
 // - deal with game end when no more questions anywhere!
-// - pull custom widgets to own files
 
 void main() => runApp(new QuizScreen());

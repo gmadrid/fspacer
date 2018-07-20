@@ -8,26 +8,22 @@ class StatusWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = buildStatusTheme(Theme.of(context));
-    return Theme(
-        data: theme,
-        child: Row(
-          children: <Widget>[
-            Expanded(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
+    var themeData = Theme.of(context);
+    return Row(
+      children: <Widget>[
+        Expanded(
+            child: Container(
+                padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+                color: themeData.primaryColorLight,
+                alignment: Alignment.center,
+                child: Text(
                   _game.status,
-                  style: theme.textTheme.display1,
-                )
-              ],
-            ))
-          ],
-        ));
-  }
-
-  ThemeData buildStatusTheme(ThemeData base) {
-    return base.copyWith(backgroundColor: Colors.red);
+                  style: themeData
+                      .textTheme
+                      .display1
+                      .copyWith(color: Colors.black),
+                )))
+      ],
+    );
   }
 }
