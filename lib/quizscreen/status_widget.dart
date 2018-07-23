@@ -13,13 +13,13 @@ class StatusWidget extends StatelessWidget {
       children: <Widget>[
         Expanded(
             child: Container(
-                padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
-                color: themeData.primaryColorLight,
-                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+                color: themeData.primaryColor,
+                alignment: Alignment.centerLeft,
                 child: Text(
                   _game.status,
                   style: themeData.textTheme.display1
-                      .copyWith(color: Colors.black),
+                      .copyWith(color: Colors.white),
                 )))
       ],
     );

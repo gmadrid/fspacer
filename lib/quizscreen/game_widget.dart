@@ -21,8 +21,9 @@ class GameState extends State<GameWidget> {
     };
     return Column(
       children: <Widget>[
-        DisplayWidget(_game.currentCard),
         StatusWidget(_game),
+        DisplayWidget(_game.currentCard),
+        Divider(color: Colors.black),
         InputWidget(kkk)
       ],
     );
