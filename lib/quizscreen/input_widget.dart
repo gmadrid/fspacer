@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
+typedef void KeyCallback(String key);
+
 class InputWidget extends StatelessWidget {
   InputWidget(this._onPressed);
 
-  final VoidCallback _onPressed;
+  final KeyCallback _onPressed;
 
   Widget buildNumberButton(String txt, TextStyle style) {
-    VoidCallback onPressed = null;
+    VoidCallback callback;
     if (txt.isNotEmpty) {
-      onPressed = _onPressed;
+      callback = () => _onPressed(txt);
     }
     return Container(
       child: MaterialButton(
@@ -16,7 +18,7 @@ class InputWidget extends StatelessWidget {
           txt,
           style: style,
         ),
-        onPressed: onPressed,
+        onPressed: callback,
       ),
       padding: EdgeInsets.all(8.0),
     );

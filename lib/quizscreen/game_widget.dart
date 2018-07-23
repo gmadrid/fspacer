@@ -14,7 +14,7 @@ class GameWidget extends StatefulWidget {
 class GameState extends State<GameWidget> {
   @override
   Widget build(BuildContext context) {
-    VoidCallback kkk = () {
+    KeyCallback keyCallback = (inp) {
       setState(() {
         _game.tryInput("foo");
       });
@@ -23,8 +23,8 @@ class GameState extends State<GameWidget> {
       children: <Widget>[
         StatusWidget(_game),
         DisplayWidget(_game.currentCard),
-        Divider(color: Colors.black),
-        InputWidget(kkk)
+        Divider(color: Colors.black54),
+        InputWidget(keyCallback)
       ],
     );
   }
