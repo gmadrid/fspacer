@@ -10,6 +10,10 @@ String A(num index) {
   return "Answer $index";
 }
 
+class NoOpShuffler implements Shuffler {
+  void shuffle(List arr) {}
+}
+
 LeitnerBox simpleTestSet(num size) {
   var questions = List<Question>();
 
@@ -17,8 +21,9 @@ LeitnerBox simpleTestSet(num size) {
     questions.add(Question(Q(i), A(i)));
   }
 
-  var lb = LeitnerBox();
-  lb.addQuestions(questions, shuffle: false);
+  // Shuffling makes things untestable.
+  var lb = LeitnerBox(shuffler: NoOpShuffler());
+  lb.addQuestions(questions);
   return lb;
 }
 

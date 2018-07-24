@@ -1,19 +1,28 @@
 import 'package:fspacer/leitner/question.dart';
 
+abstract class Shuffler {
+  void shuffle(List arr);
+}
+
+class RandomShuffler implements Shuffler {
+  void shuffle(List arr) {
+    arr.shuffle();
+  }
+}
+
 class LeitnerBox {
-  LeitnerBox() {
+  LeitnerBox({Shuffler shuffler})
+      : _shuffler = shuffler ?? RandomShuffler() {
     _buckets = List();
     for (var i = 0; i < _total_buckets; ++i) {
       _buckets.add(List());
     }
   }
 
-  void addQuestions(Iterable<Question> questions, {bool shuffle = true}) {
+  void addQuestions(Iterable<Question> questions) {
     _buckets[waiting_bucket].addAll(questions);
     _numQuestions += questions.length;
-    if (shuffle) {
       this.shuffle(waiting_bucket);
-    }
   }
   num size() {return _numQuestions;}
   num bucketSize(num index) { return _buckets[index].length; }
@@ -24,7 +33,7 @@ class LeitnerBox {
   }
 
   void shuffle(num index) {
-    _buckets[index].shuffle();
+    _shuffler.shuffle(_buckets[index]);
   }
 
   void moveToFirst(num index) {
@@ -54,6 +63,7 @@ class LeitnerBox {
 
   static const num _total_buckets = last_bucket + 1;
 
+  Shuffler _shuffler;
   List<List<Question>> _buckets;
   num _numQuestions = 0;
 }
