@@ -18,6 +18,7 @@ class Game {
 
     _lb.addQuestions(qs);
     _lb.shuffle(LeitnerBox.waiting_bucket);
+    _addQuestionsToFirstBucket();
   }
 
   String get status {

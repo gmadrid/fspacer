@@ -18,7 +18,7 @@ LeitnerBox simpleTestSet(num size) {
   }
 
   var lb = LeitnerBox();
-  lb.addQuestions(questions);
+  lb.addQuestions(questions, shuffle: false);
   return lb;
 }
 

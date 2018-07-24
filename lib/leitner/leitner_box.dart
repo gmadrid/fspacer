@@ -8,10 +8,12 @@ class LeitnerBox {
     }
   }
 
-  void addQuestions(Iterable<Question> questions) {
+  void addQuestions(Iterable<Question> questions, {bool shuffle = true}) {
     _buckets[waiting_bucket].addAll(questions);
     _numQuestions += questions.length;
-    shuffle(waiting_bucket);
+    if (shuffle) {
+      this.shuffle(waiting_bucket);
+    }
   }
   num size() {return _numQuestions;}
   num bucketSize(num index) { return _buckets[index].length; }

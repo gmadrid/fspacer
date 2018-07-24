@@ -7,8 +7,7 @@ class DisplayWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var pips = currentCard[0];
     var suit = currentCard[1];
-    var suitColor =
-    suit == 'H' || suit == 'D' ? Color(0xffff0000) : Color(0xff000000);
+    var suitColor = suit == 'H' || suit == 'D' ? Color(0xffff0000) : Color(0xff000000);
     var suitSymbol;
     switch (suit) {
       case 'H':
@@ -27,13 +26,14 @@ class DisplayWidget extends StatelessWidget {
 
     return Expanded(
         child: DefaultTextStyle(
-          style: TextStyle(fontSize: 96.0, color: Color(0xff000000)),
-          child:
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-            Text(pips),
-            Text(suitSymbol, style: TextStyle(color: suitColor)),
-          ]),
-        ));
+            style: TextStyle(
+              fontSize: 96.0,
+              color: Color(0xff000000),
+            ),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+              Text(pips),
+              Text(suitSymbol, style: TextStyle(color: suitColor)),
+            ])));
   }
 
   final String currentCard;

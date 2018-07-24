@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import 'quizscreen/quiz_screen.dart';
 
@@ -14,4 +15,7 @@ import 'quizscreen/quiz_screen.dart';
 // - toast when adding new questions to bucket 1.
 // - deal with game end when no more questions anywhere!
 
-void main() => runApp(new QuizScreen());
+void main() {
+  //debugPaintSizeEnabled = true;
+  runApp(new QuizScreen());
+}
