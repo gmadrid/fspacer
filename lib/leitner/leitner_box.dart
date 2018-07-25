@@ -1,14 +1,5 @@
 import 'package:fspacer/leitner/question.dart';
-
-abstract class Shuffler {
-  void shuffle(List arr);
-}
-
-class RandomShuffler implements Shuffler {
-  void shuffle(List arr) {
-    arr.shuffle();
-  }
-}
+import 'package:fspacer/leitner/shuffler.dart';
 
 class LeitnerBox {
   LeitnerBox({Shuffler shuffler})

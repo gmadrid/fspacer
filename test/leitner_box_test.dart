@@ -1,5 +1,6 @@
 import 'package:fspacer/leitner/leitner_box.dart';
 import 'package:fspacer/leitner/question.dart';
+import 'package:fspacer/leitner/shuffler.dart';
 import 'package:test/test.dart';
 
 String Q(num index) {
@@ -8,10 +9,6 @@ String Q(num index) {
 
 String A(num index) {
   return "Answer $index";
-}
-
-class NoOpShuffler implements Shuffler {
-  void shuffle(List arr) {}
 }
 
 LeitnerBox simpleTestSet(num size) {
