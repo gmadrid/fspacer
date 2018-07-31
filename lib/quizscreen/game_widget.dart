@@ -27,7 +27,6 @@ class GameState extends State<GameWidget> implements GameListener {
       children: <Widget>[
         StatusWidget(_game),
         DisplayWidget(_game.currentCard.q),
-        Divider(color: Colors.black54),
         InputWidget(keyCallback)
       ],
     );

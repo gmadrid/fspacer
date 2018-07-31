@@ -27,7 +27,7 @@ class DisplayWidget extends StatelessWidget {
 
     return Expanded(
         child: Container(
-            color: Color(0xffeeeeee),
+            color: Color(0xffdddddd),
             alignment: Alignment.center,
             child: Card(
                 child: Padding(

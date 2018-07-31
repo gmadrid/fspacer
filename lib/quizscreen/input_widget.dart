@@ -24,31 +24,33 @@ class InputWidget extends StatelessWidget {
     );
   }
 
-  Table buildNumpad(TextStyle textStyle) {
-    return Table(
-      children: <TableRow>[
-        TableRow(children: <Widget>[
-          buildNumberButton("7", textStyle),
-          buildNumberButton("8", textStyle),
-          buildNumberButton("9", textStyle),
-        ]),
-        TableRow(children: <Widget>[
-          buildNumberButton("4", textStyle),
-          buildNumberButton("5", textStyle),
-          buildNumberButton("6", textStyle),
-        ]),
-        TableRow(children: <Widget>[
-          buildNumberButton("1", textStyle),
-          buildNumberButton("2", textStyle),
-          buildNumberButton("3", textStyle),
-        ]),
-        TableRow(children: <Widget>[
-          buildNumberButton("", textStyle),
-          buildNumberButton("0", textStyle),
-          buildNumberButton("", textStyle),
-        ]),
-      ],
-    );
+  Widget buildNumpad(TextStyle textStyle) {
+    return Container(
+        padding: EdgeInsets.only(top: 8.0),
+        child: Table(
+          children: <TableRow>[
+            TableRow(children: <Widget>[
+              buildNumberButton("7", textStyle),
+              buildNumberButton("8", textStyle),
+              buildNumberButton("9", textStyle),
+            ]),
+            TableRow(children: <Widget>[
+              buildNumberButton("4", textStyle),
+              buildNumberButton("5", textStyle),
+              buildNumberButton("6", textStyle),
+            ]),
+            TableRow(children: <Widget>[
+              buildNumberButton("1", textStyle),
+              buildNumberButton("2", textStyle),
+              buildNumberButton("3", textStyle),
+            ]),
+            TableRow(children: <Widget>[
+              buildNumberButton("", textStyle),
+              buildNumberButton("0", textStyle),
+              buildNumberButton("", textStyle),
+            ]),
+          ],
+        ));
   }
 
   @override
