@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import 'quizscreen/quiz_screen.dart';
 
@@ -16,6 +15,6 @@ import 'quizscreen/quiz_screen.dart';
 // - deal with game end when no more questions anywhere!
 
 void main() {
-  //debugPaintSizeEnabled = true;
+//  debugPaintSizeEnabled = true;
   runApp(new QuizScreen());
 }
