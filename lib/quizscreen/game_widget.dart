@@ -15,11 +15,11 @@ class GameWidget extends StatefulWidget {
 class GameState extends State<GameWidget> implements GameListener {
   @override
   Widget build(BuildContext context) {
+    _game.listener = this;
+
     KeyCallback keyCallback = (inp) {
-      print("SSFB: $_stringSoFar");
-      _stringSoFar += inp;
-      print("SSF: $_stringSoFar");
       setState(() {
+        _stringSoFar += inp;
         _game.tryInput(_stringSoFar);
       });
     };
@@ -33,10 +33,12 @@ class GameState extends State<GameWidget> implements GameListener {
   }
 
   responseCorrect(Question q, String resp) {
+    print("Correct");
     resetStringSoFar();
   }
 
   responseIncorrect(Question q, String resp) {
+    print("Wrong");
     resetStringSoFar();
   }
 
