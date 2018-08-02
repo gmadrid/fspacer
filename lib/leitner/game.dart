@@ -8,14 +8,22 @@ const num _DEFAULT_NUM_QUESTIONS = 5;
 
 abstract class GameListener {
   responseCorrect(Question q, String resp);
-
   responseIncorrect(Question q, String resp);
+  stateChange(GameLifecycleState gameState);
+}
+
+enum GameLifecycleState {
+  NewQuestion,
+  Questioning,  // A question is displayed and being answered.
+  AnsweredWrong,
+  AnsweredRight,
+  AddingQuestions,
 }
 
 class Game {
   Game(num timeoutSecs, {this.listener, Shuffler shuffler})
-      : _schedule = Schedule(7) {
-    _lb = LeitnerBox(shuffler: shuffler);
+      : _schedule = Schedule(7),
+        _lb = LeitnerBox(shuffler: shuffler) {
 
     var qs = List<Question>();
     var mnemonicaQuestions = mnemonica.split(':');
@@ -27,6 +35,10 @@ class Game {
     _lb.shuffle(LeitnerBox.waiting_bucket);
     _addQuestionsToFirstBucket();
   }
+
+  LeitnerBox _lb;
+  Schedule _schedule;
+  GameListener listener;
 
   // TODO: get rid of this.
   String get status {
@@ -69,8 +81,4 @@ class Game {
       listener?.responseIncorrect(card, input);
     }
   }
-
-  LeitnerBox _lb;
-  Schedule _schedule;
-  GameListener listener;
 }

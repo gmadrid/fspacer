@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:fspacer/leitner/game.dart';
 import 'package:fspacer/leitner/question.dart';
+import 'package:fspacer/ui/keyboards/keyboard_base.dart';
 
 import 'display_widget.dart';
 import 'status_widget.dart';
@@ -40,6 +41,10 @@ class GameState extends State<GameWidget> implements GameListener {
   responseIncorrect(Question q, String resp) {
     print("Wrong");
     resetStringSoFar();
+  }
+
+  stateChange(GameLifecycleState gameState) {
+
   }
 
   resetStringSoFar() => _stringSoFar = "";

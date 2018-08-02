@@ -1,61 +1,13 @@
 import 'package:flutter/material.dart';
 
-typedef void KeyCallback(String key);
+import 'package:fspacer/ui/keyboards/keyboard_base.dart';
+import 'package:fspacer/ui/keyboards/numeric_keyboard.dart';
 
 class InputWidget extends StatelessWidget {
   InputWidget(this._onPressed);
 
   final KeyCallback _onPressed;
 
-  Widget buildNumberButton(String txt, TextStyle style) {
-    VoidCallback callback;
-    if (txt.isNotEmpty) {
-      callback = () => _onPressed(txt);
-    }
-    return Container(
-      child: MaterialButton(
-        child: Text(
-          txt,
-          style: style,
-        ),
-        onPressed: callback,
-      ),
-      padding: EdgeInsets.all(8.0),
-    );
-  }
-
-  Widget buildNumpad(TextStyle textStyle) {
-    return Container(
-        padding: EdgeInsets.only(top: 8.0),
-        child: Table(
-          children: <TableRow>[
-            TableRow(children: <Widget>[
-              buildNumberButton("7", textStyle),
-              buildNumberButton("8", textStyle),
-              buildNumberButton("9", textStyle),
-            ]),
-            TableRow(children: <Widget>[
-              buildNumberButton("4", textStyle),
-              buildNumberButton("5", textStyle),
-              buildNumberButton("6", textStyle),
-            ]),
-            TableRow(children: <Widget>[
-              buildNumberButton("1", textStyle),
-              buildNumberButton("2", textStyle),
-              buildNumberButton("3", textStyle),
-            ]),
-            TableRow(children: <Widget>[
-              buildNumberButton("", textStyle),
-              buildNumberButton("0", textStyle),
-              buildNumberButton("", textStyle),
-            ]),
-          ],
-        ));
-  }
-
   @override
-  Widget build(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.display1;
-    return buildNumpad(textStyle);
-  }
+  Widget build(BuildContext context) => NumericKeyboard(onPressed: _onPressed);
 }
