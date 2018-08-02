@@ -1,5 +1,4 @@
 import 'package:fspacer/leitner/leitner_box.dart';
-import 'package:fspacer/leitner/mnemonica.dart';
 import 'package:fspacer/leitner/question.dart';
 import 'package:fspacer/leitner/schedule.dart';
 import 'package:fspacer/leitner/shuffler.dart';
@@ -7,38 +6,70 @@ import 'package:fspacer/leitner/shuffler.dart';
 const num _DEFAULT_NUM_QUESTIONS = 5;
 
 abstract class GameListener {
+  List<Question> initializing();
+  void newQuestion(Question q);
+  void questioning(Question q);
+  void answeredWrong(Question q, String response, bool timeout);
+  void answeredRight(Question q);
+  void addingQuestions();
+  void addedQuestions();
+
   responseCorrect(Question q, String resp);
   responseIncorrect(Question q, String resp);
   stateChange(GameLifecycleState gameState);
 }
 
+/*
+                                    +--> AnsweredRight --+
+                                   /                      \
+    NewQuestion --> Questioning --<                        +------+
+        ^                          \                      /       |
+        |                           \--> AnsweredWrong --+        |
+        |                                                         |
+        +--[AddedQuestions] <--------- [AddingQuestions] <--------+
+
+ */
 enum GameLifecycleState {
+  // Initializing. An opportunity to change the question set.
+  Initializing,
+
+  // The question has just been changed to a new Question.
   NewQuestion,
-  Questioning,  // A question is displayed and being answered.
+
+  // We are waiting for a response to the current question.
+  Questioning,
+
+  // The current question was answered incorrectly.
   AnsweredWrong,
+
+  // The current question was answered correctly.
   AnsweredRight,
+
+  // The game is about to add new questions to the box.
   AddingQuestions,
+
+  // The game just added new questions to the box.
+  AddedQuestions
 }
 
 class Game {
-  Game(num timeoutSecs, {this.listener, Shuffler shuffler})
+  Game({this.listener, Shuffler shuffler, Duration timeout})
       : _schedule = Schedule(7),
         _lb = LeitnerBox(shuffler: shuffler) {
-
-    var qs = List<Question>();
-    var mnemonicaQuestions = mnemonica.split(':');
-    for (var i = 0; i < mnemonicaQuestions.length; ++i) {
-      qs.add(Question(mnemonicaQuestions[i], (i + 1).toString()));
-    }
-
-    _lb.addQuestions(qs);
-    _lb.shuffle(LeitnerBox.waiting_bucket);
-    _addQuestionsToFirstBucket();
   }
 
   LeitnerBox _lb;
   Schedule _schedule;
   GameListener listener;
+
+  void start() {
+    var questions = listener.initializing();
+
+    _lb.addQuestions(questions);
+    _lb.shuffle(LeitnerBox.waiting_bucket);
+    _addQuestionsToFirstBucket();
+
+  }
 
   // TODO: get rid of this.
   String get status {
