@@ -7,5 +7,22 @@ abstract class KeyboardBase extends StatelessWidget {
   final TextStyle textStyle;
   final KeyCallback onPressed;
 
-  KeyboardBase({this.padding, this.textStyle, this.onPressed});
+  KeyboardBase({this.padding, @required this.textStyle, this.onPressed});
+
+  Widget buildInputButton(String txt) {
+    VoidCallback callback;
+    if (txt.isNotEmpty) {
+      callback = () => onPressed(txt);
+    }
+    return Container(
+      child: MaterialButton(
+        child: Text(
+          txt,
+          style: textStyle,
+        ),
+        onPressed: callback,
+      ),
+      padding: EdgeInsets.all(8.0),
+    );
+  }
 }
