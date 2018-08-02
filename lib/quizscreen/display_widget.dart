@@ -3,11 +3,17 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class PacMan extends StatelessWidget {
+  PacMan({@required double currentPct}) {
+    _currentPct = currentPct;
+  }
+
+  double _currentPct;
+
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
         foregroundPainter:
-        ArcPainter(current: 40.0, color: Theme.of(context).accentColor),
+        ArcPainter(current: _currentPct, color: Theme.of(context).accentColor),
         child: Container());
   }
 }
@@ -94,7 +100,7 @@ class DisplayWidget extends StatelessWidget {
           height: 60.0,
           child: Padding(
               padding: EdgeInsets.all(10.0),
-              child: PacMan())),
+              child: PacMan(currentPct: 40.0,))),
     ]));
   }
 
