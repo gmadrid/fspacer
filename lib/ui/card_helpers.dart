@@ -6,14 +6,14 @@ List<Widget> cardTexts(String cardName) {
 
   return [
     Text(pips),
-    Text(symbolForSuit_(suit), style: TextStyle(color: suitColor(suit))),
+    Text(symbolForSuit(suit), style: TextStyle(color: suitColor(suit))),
   ];
 }
 
 Color suitColor(String suit) =>
     suit == 'H' || suit == 'D' ? Color(0xffff0000) : Color(0xff000000);
 
-String symbolForSuit_(String suit) {
+String symbolForSuit(String suit) {
   var suitSymbol;
   switch (suit) {
     case 'H':

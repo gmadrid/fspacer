@@ -9,7 +9,7 @@ abstract class GameListener {
   List<Question> initializing();
   void newQuestion(Question q);
   void questioning(Question q);
-  void answeredWrong(Question q, String response, bool timeout);
+  void answeredWrong(Question q, String response);
   void answeredRight(Question q);
   void addingQuestions();
   void addedQuestions();
@@ -58,12 +58,12 @@ enum GameLifecycleState {
 class Game {
   Game({this.listener, Shuffler shuffler, Duration timeout})
       : _schedule = Schedule(7),
-        _lb = LeitnerBox(shuffler: shuffler) {
-  }
+        _lb = LeitnerBox(shuffler: shuffler);
 
   LeitnerBox _lb;
   Schedule _schedule;
   GameListener listener;
+  Question currentCard;
 
   void start() {
     var questions = listener.initializing();

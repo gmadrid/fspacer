@@ -4,7 +4,7 @@ import 'package:fspacer/ui/card_helpers.dart';
 import 'package:fspacer/ui/countdown_pie.dart';
 
 class DisplayWidget extends StatelessWidget {
-  DisplayWidget(this.currentCard);
+  DisplayWidget(this.currentCard, this.elapsedPercentage);
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +33,11 @@ class DisplayWidget extends StatelessWidget {
           child: Padding(
               padding: EdgeInsets.all(10.0),
               child: CountdownPie(
-                currentPct: 40.0,
+                currentPct: elapsedPercentage,
               ))),
     ]));
   }
 
   final String currentCard;
+  final double elapsedPercentage;
 }
