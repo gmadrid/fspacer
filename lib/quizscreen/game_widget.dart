@@ -49,9 +49,9 @@ class GameState extends State<GameWidget> implements GameListener {
     return qs;
   }
 
-  void newQuestion(Question q) {}
-
-  void questioning(Question q) {}
+  void newQuestion(Question q) {
+    print("newQuestion: $q")
+  }
 
   void answeredWrong(Question q, String response, bool timeout) {}
 

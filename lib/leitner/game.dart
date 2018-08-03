@@ -22,11 +22,14 @@ abstract class GameListener {
 /*
                                     +--> AnsweredRight --+
                                    /                      \
-    NewQuestion --> Questioning --<                        +------+
+    NewQuestion ------------------<                        +------+
         ^                          \                      /       |
         |                           \--> AnsweredWrong --+        |
         |                                                         |
         +--[AddedQuestions] <--------- [AddingQuestions] <--------+
+                                            ^
+                                            |
+                                      Initializing
 
  */
 enum GameLifecycleState {
@@ -68,7 +71,7 @@ class Game {
     _lb.addQuestions(questions);
     _lb.shuffle(LeitnerBox.waiting_bucket);
     _addQuestionsToFirstBucket();
-
+    _prepareNextQuestion();
   }
 
   // TODO: get rid of this.
@@ -76,7 +79,7 @@ class Game {
     return "Level: ${_schedule.current()}";
   }
 
-  Question get currentCard {
+  void _prepareNextQuestion() {
     var bucketIndex = _schedule.current();
     while (_lb.bucketSize(bucketIndex) == 0) {
       // TODO: this will infinite loop if the box is empty.
@@ -90,14 +93,16 @@ class Game {
     }
 
     var card = _lb.next(bucketIndex);
-    return card;
+    listener.newQuestion(card);
   }
 
   void _addQuestionsToFirstBucket() {
     // TODO: deal with case when the "waiting" box is empty.
+    listener.addingQuestions();
     for (var i = 0; i < _DEFAULT_NUM_QUESTIONS; ++i) {
       _lb.moveToFirst(LeitnerBox.waiting_bucket);
     }
+    listener.addedQuestions();
   }
 
   void tryInput(String input) {
