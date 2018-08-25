@@ -12,13 +12,13 @@ class UnknownStateException implements Exception {
   UnknownStateException();
 }
 
-class State {
-  final String name;
-  final Map<State, TransitionCallback> nextStates = Map();
+class State<T> {
+  final T name;
+  final Map<State<T>, TransitionCallback> nextStates = Map();
 
   State(this.name);
 
-  void addSuccessor(State succ, TransitionCallback callback) {
+  void addSuccessor(State<T> succ, TransitionCallback callback) {
     if (nextStates.containsKey(succ)) throw DuplicateTransitionException;
 
     nextStates[succ] = callback;
@@ -37,16 +37,16 @@ class State {
   }
 }
 
-class StateMachine {
+class StateMachine<T> {
   StateMachine() : _states = Map();
 
-  final Map<String, State> _states;
-  State _currentState = null;
+  final Map<T, State> _states;
+  State _currentState;
 
   String get currentState => _currentState.name;
 
   // The first state will be the start state.
-  void addStates(List<String> states) {
+  void addStates(List<T> states) {
     states.forEach((stateName) {
       State state = State(stateName);
       _currentState ??= state;
@@ -54,7 +54,7 @@ class StateMachine {
     });
   }
 
-  void addStateTransition(String from, String to, TransitionCallback callback) {
+  void addStateTransition(T from, T to, TransitionCallback callback) {
     State fromState = _states[from];
     if (fromState == null) throw UnknownStateException;
 
@@ -64,7 +64,7 @@ class StateMachine {
     fromState.addSuccessor(toState, callback);
   }
 
-  void advanceTo(String to) {
+  void advanceTo(T to) {
     State toState = _states[to];
     if (toState == null) throw UnknownStateException;
     _currentState.advance(toState);

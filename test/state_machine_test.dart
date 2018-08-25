@@ -3,9 +3,9 @@ import 'package:test/test.dart';
 import 'package:fspacer/state_machine.dart';
 
 void main() {
-  State init;
-  State next;
-  State unconnected;
+  State<String> init;
+  State<String> next;
+  State<String> unconnected;
 
   setUp(() {
     init = State("init");
@@ -44,22 +44,39 @@ void main() {
     init.advance(next);
     expect(called, isTrue);
   });
-}
 
-//void main() {
-//  Game _game;
-//  TestListener _listener;
-//
-//  setUp(() {
-//    _listener = TestListener();
-//    _game = Game(15, shuffler: NoOpShuffler(), listener: _listener);
-//  });
-//
-//  test("game creation", () {
-//    expect(_game, isNotNull);
-//  });
-//
-//  test("first card", () {
-//    // Assumes Mnemonica and no shuffling.
-//    // (With no shuffling, the first card is actually #52.)
-//    expect(_game.currentCard.a, equals("9D"));
+  StateMachine<int> _machine;
+
+  var one23 = false;
+  var three24 = false;
+  var one22 = false;
+
+  _makeStateMachine() {
+    _machine = StateMachine<int>();
+
+    var oneToThreeCalled = () { one23 = true; };
+    var threeToFourCalled = () { three24 = true; };
+    var oneToTwoCalled = () { one22 = true; };
+
+    _machine.addStates([1, 2, 3, 4]);
+    _machine.addStateTransition(1, 3, oneToThreeCalled);
+    _machine.addStateTransition(3, 4, threeToFourCalled);
+    _machine.addStateTransition(1, 2, oneToTwoCalled);
+  }
+
+  // Now, test the state machine.
+  test("state machine", () {
+    _makeStateMachine();
+    _machine.advanceTo(3);
+    expect(one23, isTrue);
+
+    expect(three24, isFalse);
+    _machine.advanceTo(4);
+    expect(three24, isTrue);
+
+    expect(() {
+      _machine.advanceTo(2);
+    }, throwsA(BadSuccessorException));
+  });
+
+}

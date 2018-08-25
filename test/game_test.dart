@@ -7,9 +7,6 @@ import 'package:fspacer/leitner/shuffler.dart';
 const int NUM_TEST_QUESTIONS = 25;
 
 class TestListener implements GameListener {
-//  responseCorrect(Question q, String resp) => result = true;
-//  responseIncorrect(Question q, String resp) => result = false;
-
   List<Question> initializing() {
     initializingCalled++;
 
@@ -27,15 +24,26 @@ class TestListener implements GameListener {
     lastNewQuestion = q;
     newQuestionCalled++;
   }
-  void answeredWrong(Question q, String response) {}
-  void answeredRight(Question q) {}
+  void answeredWrong(Question q, String response) { answeredWrongCalled++; }
+  void answeredRight(Question q) { answeredRightCalled++; }
   void addingQuestions() { addingQuestionsCalled++; }
   void addedQuestions() { addedQuestionsCalled++; }
+
+  void clear() {
+    addedQuestionsCalled = 0;
+    addingQuestionsCalled = 0;
+    initializingCalled = 0;
+    newQuestionCalled = 0;
+    answeredWrongCalled = 0;
+    answeredRightCalled = 0;
+  }
 
   int addedQuestionsCalled = 0;
   int addingQuestionsCalled = 0;
   int initializingCalled = 0;
   int newQuestionCalled = 0;
+  int answeredWrongCalled = 0;
+  int answeredRightCalled = 0;
 
   Question lastNewQuestion;
 }
@@ -68,6 +76,15 @@ void main() {
 
     expect(_game.state, equals(GameLifecycleState.NewQuestion));
     expect(_listener.lastNewQuestion, equals(Question("Q0", "A0")));
+  });
+
+  test("first card is expected", () {
+    expect(_listener.lastNewQuestion, equals(Question("Q0", "A0")));
+  });
+
+  test("incomplete answer ok", () {
+    expect(_game.state, equals(GameLifecycleState.NewQuestion));
+    _game.tr
   });
 
 //  test("game creation", () {

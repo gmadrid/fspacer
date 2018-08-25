@@ -2,6 +2,7 @@ import 'package:fspacer/leitner/leitner_box.dart';
 import 'package:fspacer/leitner/question.dart';
 import 'package:fspacer/leitner/schedule.dart';
 import 'package:fspacer/leitner/shuffler.dart';
+import 'package:fspacer/state_machine.dart';
 
 const num _DEFAULT_NUM_QUESTIONS = 5;
 
@@ -26,10 +27,6 @@ enum GameLifecycleState {
 
   // The question has just been changed to a new Question.
   NewQuestion,
-
-  // We are waiting for a response to the current question.
-  // Call tryInput() to pass in an response.
-  Questioning,
 
   // The current question was answered incorrectly.
   AnsweredWrong,
@@ -59,10 +56,32 @@ class Game {
   Game({this.listener, Shuffler shuffler, Duration timeout})
       : _schedule = Schedule(7),
         _lb = LeitnerBox(shuffler: shuffler);
+  _machine = _makeStateMachine();
 
   LeitnerBox _lb;
   Schedule _schedule;
   GameListener listener;
+  Question _currentCard;
+
+  static void _makeStateMachine() {
+    StateMachine<GameLifecycleState> machine = StateMachine();
+    machine.addStates([
+      GameLifecycleState.Unknown,
+      GameLifecycleState.Initializing,
+      GameLifecycleState.NewQuestion,
+      GameLifecycleState.AnsweredWrong,
+      GameLifecycleState.AnsweredRight,
+      GameLifecycleState.AddingQuestions,
+      GameLifecycleState.NewQuestion
+    ]);
+
+    machine.addStateTransition(GameLifecycleState.Unknown, GameLifecycleState.Initializing, () { this.Initializing(); };);
+    machine.addStateTransition(GameLifecycleState.Initializing, GameLifecycleState.AddingQuestions, () { this.AddingQuestions(); });
+    machine.addStateTransition(GameLifecycleState.AddingQuestions, GameLifecycleState.AddedQuestions, () {this.AddedQuestions(); });
+    machine.addStateTransition(GameLifecycleState.NewQuestion, GameLifecycleState.AnsweredRight, () { this.AnsweredRight(); });
+    machine.addStateTransition(GameLifecycleState.NewQuestion, GameLifecycleState.AnsweredWrong, () { this.AnsweredWrong(); });
+
+  }
 
   int get totalQuestions => _lb.size();
 
@@ -87,6 +106,19 @@ class Game {
     state = GameLifecycleState.Initializing;
     _addQuestionsToFirstBucket();
     _prepareNextQuestion();
+  }
+
+  void tryInput(String input) {
+    var card = _currentCard;
+    if (input == card.a) {
+      _lb.moveUp(_schedule.current());
+      listener?.answeredRight(card);
+    }
+
+    if (!card.a.startsWith(input)) {
+      _lb.moveToFirst(_schedule.current());
+      listener?.answeredWrong(card, input);
+    }
   }
 
   void _addQuestions(List<Question> qs) {
@@ -122,6 +154,7 @@ class Game {
 
     var card = _lb.next(bucketIndex);
     state = GameLifecycleState.NewQuestion;
+    _currentCard = card;
     listener.newQuestion(card);
   }
 
@@ -134,16 +167,4 @@ class Game {
 //    return "Level: ${_schedule.current()}";
 //  }
 //
-//  void tryInput(String input) {
-//    var card = currentCard;
-//    if (input == card.a) {
-//      _lb.moveUp(_schedule.current());
-//      listener?.responseCorrect(card, input);
-//    }
-//
-//    if (!card.a.startsWith(input)) {
-//      _lb.moveToFirst(_schedule.current());
-//      listener?.responseIncorrect(card, input);
-//    }
-//  }
 }
